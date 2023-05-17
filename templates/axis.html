@@ -1,0 +1,48 @@
+{% extends "index.html" %} {% block content %}
+
+<form action="/axis" method="post">
+  <div class="axis-container">
+    <div class="div-container">
+      <div class="limit-div">
+        <p>Enter the limits of the axis</p>
+        <input
+          name="xlimit"
+          placeholder="x-low, x-high"
+          class="input-field"
+          required
+        />
+        <input
+          name="ylimit"
+          placeholder="y-low, y-high"
+          class="input-field"
+          required
+        />
+      </div>
+      <div class="beautify">
+        <p>Label for the graph</p>
+        <input
+          name="title"
+          placeholder="Title of the graph"
+          class="input-field"
+          required
+        />
+
+        <input
+          name="x-label"
+          placeholder="x-axis label"
+          class="input-field"
+          required
+        />
+        <input
+          name="y-label"
+          placeholder="y-axis label"
+          class="input-field"
+          required
+        />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-limit">Draw</button>
+  </div>
+</form>
+
+{% endblock %}

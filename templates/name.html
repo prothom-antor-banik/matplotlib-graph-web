@@ -1,0 +1,28 @@
+{% extends "index.html" %} {% block content %}
+<div class="user-name">
+  <form action="/name" method="post">
+    <input
+      name="user-name"
+      placeholder="Your Name"
+      class="input-field"
+      required
+    />
+    <button class="btn btn-red" type="submit">Write</button>
+  </form>
+</div>
+<div class="user-div">
+  {% if list_user %}
+  <p>Previous Users :</p>
+  {% for user in list_user %}
+  <br />
+  {{ user }} {% endfor %}
+  <button
+    class="btn btn-green"
+    type="submit"
+    onclick="window.location.href='/';"
+  >
+    New
+  </button>
+  {% endif %}
+</div>
+{% endblock %}

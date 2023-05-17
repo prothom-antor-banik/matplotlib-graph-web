@@ -1,0 +1,21 @@
+{% extends "index.html" %} {% block content %}
+<button class="btn btn-water" onclick="window.location.href='/name';">
+  Name
+</button>
+<div class="graph">
+  <h1>Graph</h1>
+  <img src="{{ url_for('graph') }}" alt="" />
+  <div class="button-group">
+    <button class="btn btn-green" onclick="window.location.href='/';">
+      New
+    </button>
+    <button class="btn btn-blue" onclick="window.location.href='/axis';">
+      Ajust graph
+    </button>
+    <button class="btn btn-red" onclick="window.history.back()">Back</button>
+    <button class="btn btn-purple" onclick="window.location.href='/download';">
+      Download
+    </button>
+  </div>
+</div>
+{% endblock %}

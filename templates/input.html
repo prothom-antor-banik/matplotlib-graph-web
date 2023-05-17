@@ -1,0 +1,34 @@
+{% extends "index.html" %} {% block content %}
+<div class="container">
+  <form action="{{ url_for('data') }}" method="post">
+    <div class="div-1">
+      {% for i in range(datapoint): %}
+      <input
+        class="input-field"
+        name="{{ xid[i] }}"
+        placeholder="Enter comma seperated values for x-axis"
+        required
+      />
+      <input
+        class="input-field"
+        name="{{ yid[i] }}"
+        placeholder="Enter comma seperated values for y-axis"
+        required
+      />
+      {% endfor %}
+    </div>
+    <div class="div-2">
+      <select name="opt" id="opt">
+        <option value="seaborn-v0_8-whitegrid">seaborn-v0_8-whitegrid</option>
+        <option value="seaborn-v0_8-white">seaborn-v0_8-white</option>
+        <option value="seaborn-v0_8-notebook">seaborn-v0_8-notebook</option>
+        <option value="seaborn-v0_8-paper">seaborn-v0_8-paper</option>
+        <option value="seaborn-v0_8-bright">seaborn-v0_8-bright</option>
+        <option value="seaborn-v0_8-dark">seaborn-v0_8-dark</option>
+        <option value="seaborn-v0_8-darkgrid">seaborn-v0_8-darkgrid</option>
+      </select>
+    </div>
+    <button type="submit" class="btn">submit</button>
+  </form>
+</div>
+{% endblock %}
