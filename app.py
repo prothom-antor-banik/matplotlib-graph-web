@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, send_file                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 from io import BytesIO
 import matplotlib.pyplot as plt
-import os
-
 
 app = Flask(__name__)
 
@@ -70,7 +68,7 @@ def graph():
     for i in range(datapoint):
         plt.plot(x_data[i], y_data[i], '-o')
 
-    plt.savefig('img.jpg', dpi=1000)
+    plt.savefig('image.jpg', dpi=1000)
 
     Title.clear()
     x_label.clear()
@@ -111,9 +109,7 @@ def axis():
 ### Route -> download the image
 @app.route('/download')
 def download():
-    # if len(os.listdir('images')):
-    return send_file('img.jpg', as_attachment=True)
-    # else: return render_template('index.html')
+    return send_file('image.jpg', as_attachment=True)
 
 ### Route -> entering user name
 @app.route('/name', methods=['GET', 'POST'])
@@ -142,5 +138,5 @@ def name():
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True, port=8888)
 
