@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, send_file                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+from flask import Flask, render_template, request, send_file
 from io import BytesIO
 import matplotlib.pyplot as plt
+
 
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ app = Flask(__name__)
 def home():
     if request.method == 'GET':
         return render_template('index.html')
-    
+
     global datapoint
     datapoint = int(request.form.get('datapoint'))
 
@@ -22,10 +23,10 @@ def home():
 ### Route -> user input
 @app.route('/data', methods=['GET', 'POST'])
 def data():
-    global x_data, y_data   
+    global x_data, y_data
     x_data, y_data = [], []
 
-    global xlimits, ylimits 
+    global xlimits, ylimits
     xlimits, ylimits = [], []
 
     global Title, x_label, y_label
@@ -35,22 +36,19 @@ def data():
 
     if request.method == 'POST':
         for i in range(datapoint):
-            x = request.form.get(f"x{i}")
-            y = request.form.get(f"y{i}")
+            x = request.form.get(f"x{i}").replace(" ", "")
+            y = request.form.get(f"y{i}").replace(" ", "")
 
-            if x[len(x)-1] == ',': x = x[0: len(x)-1]
-            if y[len(x)-1] == ',': y = x[0: len(y)-1]
+            x_data.append([eval(i) for i in x.split(',')])
+            y_data.append([eval(i) for i in y.split(',')])
 
-            x_data.append([float(i) for i in x.split(',')])
-            y_data.append([float(i) for i in y.split(',')])
-        
         global option
         option = request.form.get('opt')
 
         return render_template('graph.html')
     else: return None
 
-### Route -> generate graph 
+### Route -> generate graph
 @app.route('/graph')
 def graph():
     plt.switch_backend("AGG")
@@ -72,7 +70,7 @@ def graph():
 
     Title.clear()
     x_label.clear()
-    y_label.clear() 
+    y_label.clear()
     xlimits.clear()
     ylimits.clear()
 
@@ -86,15 +84,12 @@ def graph():
 def axis():
     if request.method == 'GET':
         return render_template('axis.html')
-    else: 
-        xlim = request.form.get('xlimit')
-        ylim = request.form.get('ylimit')
+    else:
+        xlim = request.form.get('xlimit').replace(" ", "")
+        ylim = request.form.get('ylimit').replace(" ", "")
 
-        if xlim[len(xlim)-1] == ',': xlim = xlim[0: len(xlim)-1]
-        if ylim[len(ylim)-1] == ',': ylim = ylim[0: len(ylim)-1]
-
-        xlim = [float(i) for i in xlim.split(',')]
-        ylim = [float(i) for i in ylim.split(',')]
+        xlim = [eval(i) for i in xlim.split(',')]
+        ylim = [eval(i) for i in ylim.split(',')]
 
         for i in range(2):
             xlimits.append(xlim[i])
@@ -109,7 +104,7 @@ def axis():
 ### Route -> download the image
 @app.route('/download')
 def download():
-    return send_file('image.jpg', as_attachment=True)
+    return send_file('../image.jpg', as_attachment=True)
 
 ### Route -> entering user name
 @app.route('/name', methods=['GET', 'POST'])
@@ -125,7 +120,7 @@ def name():
             for line in lines:
                 if line == "": continue
                 userList[line] = True
-   
+
         userName = request.form.get('user-name')
         if userName not in userList.keys():
             with open('name.txt', 'a') as file:
@@ -139,4 +134,3 @@ def name():
 
 if __name__ == '__main__':
     app.run(debug=True, port=8888)
-
